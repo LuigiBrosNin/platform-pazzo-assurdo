@@ -1,9 +1,9 @@
-/*
+Ôªø/*
     INFO:
-        Gestione dello schermo  -> X incrementano spostandosi a destra, Y incremento spostandosi in basso. Punto in alto a sx ha coordinate (0,0), in realt‡ sarebbero (1,1) perchË riga 0 e colonna 0 vengono usate per stampare i bordi di gioco
+        Gestione dello schermo  -> X incrementano spostandosi a destra, Y incremento spostandosi in basso. Punto in alto a sx ha coordinate (0,0), in realt√† sarebbero (1,1) perch√® riga 0 e colonna 0 vengono usate per stampare i bordi di gioco
 
-        Entity                  -> classe generica da cui fare ereditare le varie entit‡ presenti nello spazio di gioco (player, enemies, bonus, ...)
-                                -> contiene varie funzioni generiche per ridurre la ridondanza nelle classi figlio (es. modifica della posizione delle entit‡)
+        Entity                  -> classe generica da cui fare ereditare le varie entit√† presenti nello spazio di gioco (player, enemies, bonus, ...)
+                                -> contiene varie funzioni generiche per ridurre la ridondanza nelle classi figlio (es. modifica della posizione delle entit√†)
 
         Screen                  -> costruttore accetta altezza e larghezza, genera la prima schermata di gioco con piattaforme e nemici
                                 -> contiene la lista di schermate usata per generare dinamicamente il mondo e tenere traccia in memoria degli schermi precedenti
@@ -35,7 +35,7 @@ bool gameOver = false;
 
 int main()
 {
-    Cursore(false);     //toglie la visibilit‡ del cursore
+    Cursore(false);     //toglie la visibilit√† del cursore
     WaitScreen();       //schermata di attesa
 
     while (!gameOver) 
@@ -50,7 +50,6 @@ int main()
         schermo.print();
         p.print();
         PrintInfo(width, height, p, schermo);
-
         Sleep(30);
     }
 

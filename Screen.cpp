@@ -17,7 +17,7 @@ Screen::Screen(int width, int height, int difficolta) {
 	this->height = height;
 	this->difficolta = difficolta-1;	// -1 perchè quando genera il livello incrementa la difficoltà di 1
 	level = generateLevel(difficolta);
-	srand(time(NULL));
+	srand((int)time(0));
 }
 void Screen::nextLevel() {
 	if (level->next != NULL) {	//va al livello successivo
@@ -48,7 +48,8 @@ p_livello Screen::generateLevel(int difficolta) {
 		va implementata anche la generazione basata sulla difficoltà
 	*/
 	ret->e = Entity(rand() % width, rand() % height, 'U');
-
+	ret->p = Platform();
+	ret->p.generate(difficolta);
 	this->difficolta++;
 	return ret;
 }
@@ -68,7 +69,8 @@ void Screen::print() {
 	cout << (char)188;
 
 	//stampa contenuto dello schermo
-	level->e.print();	
+	level->e.print();
+	level->p.print();
 }
 int Screen::getDifficolta() {
 	return difficolta;

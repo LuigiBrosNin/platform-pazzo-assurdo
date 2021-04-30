@@ -1,9 +1,11 @@
 #pragma once
 #include "Entity.h"
+#include "Platform.h"
 struct livello{
 	livello *next;
 	livello *prev;
 	Entity e;
+	Platform p;
 	//TODO: array di Platform, array di Enemy, array di Bonus (Enemy e Bonus vanno generati sulle coordinate dove c'è già una platform, in modo da renderli raggiungibili dal player)
 };
 typedef livello *p_livello;
