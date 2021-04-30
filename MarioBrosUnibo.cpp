@@ -28,8 +28,8 @@ using namespace std;
 
 
 //variabili globali
-int width = 50, height = 10;
-Player p = Player(0, height-1, '@', 0, 1);
+int width = 50, height = 10; // height != dispari
+Player p = Player(0, height-2, '@', 0, 1);
 Screen schermo = Screen(width, height);
 bool gameOver = false;
 
@@ -38,7 +38,8 @@ int main()
     Cursore(false);     //toglie la visibilità del cursore
     WaitScreen();       //schermata di attesa
 
-    while (!gameOver) {
+    while (!gameOver) 
+    {
         Clear();
 
         //gestore movimento e input

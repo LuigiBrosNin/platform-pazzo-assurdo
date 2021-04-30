@@ -23,7 +23,10 @@ int Entity::getY() {
 	return y;
 }
 void Entity::setY(int y) {
-	this->y = y;
+	if (y % 2 == 0)
+		this->y = y;
+	else
+		this->y = y - 1;
 }
 void Entity::setX(int x) {
 	this->x = x;

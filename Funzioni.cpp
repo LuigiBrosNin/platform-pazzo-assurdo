@@ -50,13 +50,13 @@ void Movement(bool* gameOver, Player& p) {		//passo p per riferimento in modo da
 		case SPACE:
 		case 'w':
 		case 'W':
-			p.decreaseY(1);
+			p.decreaseY(2);
 			break;
 			//movimento in giù
 		case ARROW_DOWN:
 		case 's':
 		case 'S':
-			p.increaseY(1);
+			p.increaseY(2);
 			break;
 			//tasto X per terminare il programma
 		case 'x':
@@ -84,8 +84,8 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo) 
 			p.setX(0);
 	}
 	//gestione movimento verticale
-	if (p.getY() >= height)
-		p.setY(height - 1);
+	if (p.getY() >= height-1)
+		p.setY(height - 2);
 	if (p.getY() < 0)
 		p.setY(0);
 	if (p.getVite() <= 0)
@@ -124,4 +124,6 @@ void PrintInfo(int width, int height, Player p, Screen schermo) {  //funzione pe
 	cout << "Punti: " << p.getPunti();
 	MoveCursor(width + 5, 3);
 	cout << "Livello: " << schermo.getDifficolta();
+	MoveCursor(width + 5, 4);
+	cout << "X: " << p.getX() << " Y: "<< p.getY();
 }
