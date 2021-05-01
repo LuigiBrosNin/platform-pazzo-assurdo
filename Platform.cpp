@@ -8,24 +8,24 @@
 #include "Platform.h"
 #include "Funzioni.h"
 Platform::Platform(int x, int y, char symbol, int wh, int he) : Entity(x, y, symbol) {
-	this->height = int(he/2);
+	this->height = int(he/2);//perché solo metà dello schermo è occupato dalle piattaforme
 	this->width = wh;
 }
 void Platform::generate(int difficulty) {
 	srand((int)time(0));
-	int count = 0;
+	int count = 0; //tiene conto di a che punto siamo con la generazione delle piattaforme in una singola riga
 	for (int he = 0; he < this->height-1; he++)
 	{
 		while (count < width)
 		{
-			for (int i = 0; i < (rand() % 50) - difficulty;i++) {
+			for (int i = 0; i < (rand() % 50) - difficulty;i++) { //genera 1 piattaforma lunga random
 				if (count < width)
 				{
 					positions[count][he] = 1;
 					count++;
 				}
 			}
-			for (int i = 0; i < (rand() % 2) + difficulty + 1; i++)
+			for (int i = 0; i < (rand() % 2) + difficulty + 1; i++) //genera 1 spazio vuoto lungo random
 			{
 				if (count < width)
 				{
@@ -34,9 +34,9 @@ void Platform::generate(int difficulty) {
 				}
 			}
 		}
-		count = 0;
+		count = 0; //nuova riga, azzero il count
 	}
-	for (int i = 0; i < width; i++) positions[i][height-1] = 1;
+	for (int i = 0; i < width; i++) positions[i][height-1] = 1; //setto il pavimento come 1
 }
 void Platform::print() 
 {
@@ -45,7 +45,7 @@ void Platform::print()
 		for (int wh = 0; wh < width; wh++)
 		{
 			if (positions[wh][he] == 1) {
-				PrintAt(wh+1, (he*2+1)+1, this->symbol);
+				PrintAt(wh+1, (he*2+1)+1, this->symbol); //offset per adattare la matrice allo schermo
 			}
 		}
 	}
