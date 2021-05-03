@@ -1,10 +1,11 @@
 #pragma once
 #include "Entity.h"
+#include "Platform.h"
 
 struct enemy
 {
-	int x;
-	int y;
+	int x;		// Coordinata X del nemico
+	int y;		// Coordinata Y del nemico
 	int type;	// Tipo di nemico ('0' = tipo1...)
 	enemy* nextEnemy;
 };
@@ -13,11 +14,10 @@ typedef enemy* enemyPosition;
 class Enemy : public Entity
 {
 	protected:
-		int type;
-		char displayedSymbol;
 		enemyPosition enemies;
 
 	public:
-		Enemy(int x, int y, int type, char symbol) : Entity(x, y, symbol);
-		//Enemy(int enemyNumber, Platform generablePositions, int screenWidth, int screenHeight, char displayedSymbol = 'S');
+		Enemy (int x = -1, int y = -1, int type = -1, char symbol = 'S');
+		void generateEnemies (int enemyNumber, Platform generablePositions);
+		void print();
 };

@@ -1,1 +1,10 @@
-﻿  MarioBrosUnibo.vcxproj -> C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe
+﻿  Enemy.cpp
+  Entity.cpp
+  Funzioni.cpp
+C:\Users\Vittorio\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(116,16): warning C4838: la conversione da 'int' a 'SHORT' richiede una conversione che supporta un minor numero di dati
+C:\Users\Vittorio\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(116,19): warning C4838: la conversione da 'int' a 'SHORT' richiede una conversione che supporta un minor numero di dati
+  MarioBrosUnibo.cpp
+  Platform.cpp
+  Screen.cpp
+  Generazione del codice in corso...
+  MarioBrosUnibo.vcxproj -> C:\Users\Vittorio\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe

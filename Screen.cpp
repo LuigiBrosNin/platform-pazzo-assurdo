@@ -51,7 +51,10 @@ p_livello Screen::generateLevel(int difficolta) {
 	ret->p = Platform();
 	ret->p.generate(difficolta);
 
-	ret->e = Enemy();
+	ret->enemiesList = Enemy();
+	ret->enemiesList.generateEnemies(5, ret->p);
+
+	ret->e = Entity();
 
 	this->difficolta++;
 	return ret;
@@ -74,6 +77,7 @@ void Screen::print() {
 	//stampa contenuto dello schermo
 	level->e.print();
 	level->p.print();
+	//level->enemiesList.print();
 }
 int Screen::getDifficolta() {
 	return difficolta;

@@ -11,5 +11,7 @@ public:
 	void generate(int difficulty); //riempie la matrice delle posizioni con 0 e 1 per segnare piattaforme
 	void print(); //stampa il vettore piattaforme nello schermo, metodo di entity sovrascritto
 	bool isThere(int x, int y); //ritorna un bool che date le coordinate x e y, ritorna true se sotto quelle coordinate c'è una piattaforma
+	int getWidth();
+	int getHeight();
 };
 
