@@ -52,6 +52,6 @@ void Platform::print()
 }
 
 bool Platform::isThere(int x, int y) {
-	if (positions[x - 1][y / 2 + 1] == 1) return true;
+	if (positions[x - 1][y / 2 + 1] == 1) return true;//date delle coordinate x e y, controlla se l'entità che si trova in x e y ha una piattaforma sotto
 	else return false;
 }

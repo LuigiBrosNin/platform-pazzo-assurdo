@@ -1,9 +1,1 @@
-﻿  Entity.cpp
-  Funzioni.cpp
-C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(116,16): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(116,19): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-  MarioBrosUnibo.cpp
-  Platform.cpp
-  Screen.cpp
-  Generating Code...
-  MarioBrosUnibo.vcxproj -> C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe
+﻿  MarioBrosUnibo.vcxproj -> C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe
