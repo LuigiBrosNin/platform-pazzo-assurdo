@@ -47,9 +47,12 @@ p_livello Screen::generateLevel(int difficolta) {
 		qua in mezzo ci va tutta la generazione dell'array di nemici, bonus e piattaforme
 		va implementata anche la generazione basata sulla difficoltà
 	*/
-	ret->e = Entity(rand() % width, rand() % height, 'U');
+	//ret->e = Entity(rand() % width, rand() % height, 'U');
 	ret->p = Platform();
 	ret->p.generate(difficolta);
+
+	ret->e = Enemy();
+
 	this->difficolta++;
 	return ret;
 }
