@@ -6,13 +6,14 @@
 
 Enemy::Enemy(int x, int y, int type, char symbol) : Entity (x, y, symbol)
 {
+	this->enemies = new enemy;
+	this->enemies->nextEnemy = NULL;
 }
 
 void Enemy::generateEnemies (int enemyNumber, Platform generablePositions)
 {
 	int x = 0, y = 0;
 	bool endOfScreen = false, memorized = false;
-	enemyPosition enemies = new enemy;
 
 	for (int i = 0; i < enemyNumber && !endOfScreen; i++)
 	{
@@ -29,11 +30,13 @@ void Enemy::generateEnemies (int enemyNumber, Platform generablePositions)
 
 				if (generablePositions.isThere(x, y) && (rand() % 2) == 0)		// Memorizzo il nemico nella lista
 				{
-					enemies->x = x;
-					enemies->y = y;
-					enemies->type = rand() % 3;
-					enemies->nextEnemy = new enemy;
+					enemyPosition list = new enemy;
+					list->x = x;
+					list->y = y;
+					list->type = rand() % 3;
+					list->nextEnemy = this->enemies;
 
+					this->enemies = list;
 					/*
 						!!!!!!!!!!!!!!!!
 						Istruzione sottostante presente solo per visualizzare temporaneamente
@@ -42,9 +45,7 @@ void Enemy::generateEnemies (int enemyNumber, Platform generablePositions)
 						poco più sotto, ma la lista 'enemies' istanziata alla riga 15 sembra
 						apparentemente scomparire alla fine di questa funzione
 					*/
-					PrintAt(enemies->x + 1, enemies->y + 1, 'B');
-
-					enemies = enemies->nextEnemy;
+					//PrintAt(enemies->x + 1, enemies->y + 1, 'B');
 
 					memorized = true;
 				}
@@ -56,10 +57,11 @@ void Enemy::generateEnemies (int enemyNumber, Platform generablePositions)
 void Enemy::print ()
 {
 	char s = '0';
-	
-	while (enemies->nextEnemy != NULL)
+	enemyPosition list = this->enemies;
+
+	while (list->nextEnemy != NULL)
 	{
-		switch (enemies->type)
+		switch (list->type)
 		{
 			case 0:
 			{
@@ -80,7 +82,7 @@ void Enemy::print ()
 			}
 		}
 
-		PrintAt(enemies->x + 1, enemies->y + 1, s);
-		enemies = enemies->nextEnemy;
+		PrintAt(list->x, list->y, s);
+		list = list->nextEnemy;
 	}
 }

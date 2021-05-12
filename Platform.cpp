@@ -63,5 +63,5 @@ int Platform::getWidth()
 
 int Platform::getHeight()
 {
-	return this->height;
+	return this->height*2;
 }

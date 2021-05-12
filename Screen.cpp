@@ -77,7 +77,7 @@ void Screen::print() {
 	//stampa contenuto dello schermo
 	level->e.print();
 	level->p.print();
-	//level->enemiesList.print();
+	level->enemiesList.print();
 }
 int Screen::getDifficolta() {
 	return difficolta;
