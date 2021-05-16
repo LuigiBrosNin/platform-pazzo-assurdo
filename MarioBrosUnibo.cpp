@@ -43,14 +43,14 @@ int main()
         Clear();
 
         //gestore movimento e input
-        Movement(&gameOver, p);
+        Movement(&gameOver, p, schermo);
         Handler(width, height, &gameOver, p, schermo);
 
         //stampa
         schermo.print();
         p.print();
         PrintInfo(width, height, p, schermo);
-        Sleep(30);
+        Sleep(50);
     }
 
     Clear();

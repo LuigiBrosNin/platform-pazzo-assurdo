@@ -1,2 +1,9 @@
-﻿  Enemy.cpp
-  MarioBrosUnibo.vcxproj -> C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe
+﻿  Funzioni.cpp
+C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(128,16): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(128,19): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+  Screen.cpp
+C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Screen.cpp(44,18): error C2280: 'livello::livello(void)': attempting to reference a deleted function
+C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Screen.h(16): message : compiler has generated 'livello::livello' here
+C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Screen.h(16,1): message : 'livello::livello(void)': function was implicitly deleted because a data member 'livello::b' has either no appropriate default constructor or overload resolution was ambiguous
+C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Screen.h(11): message : see declaration of 'livello::b'
+  Generating Code...

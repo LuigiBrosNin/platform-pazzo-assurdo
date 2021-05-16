@@ -13,6 +13,7 @@ Platform::Platform(int x, int y, char symbol, int wh, int he) : Entity(x, y, sym
 }
 void Platform::generate(int difficulty) {
 	srand((int)time(0));
+	difficulty = int(difficulty / 3);
 	int count = 0; //tiene conto di a che punto siamo con la generazione delle piattaforme in una singola riga
 	for (int he = 0; he < this->height-1; he++)
 	{
@@ -52,7 +53,7 @@ void Platform::print()
 }
 
 bool Platform::isThere(int x, int y) {
-	if (positions[x - 1][y / 2 + 1] == 1) return true;//date delle coordinate x e y, controlla se l'entità che si trova in x e y ha una piattaforma sotto
+	if (positions[x][y / 2] == 1) return true;//date delle coordinate x e y, controlla se l'entità che si trova in x e y ha una piattaforma sotto
 	else return false;
 }
 

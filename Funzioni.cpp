@@ -9,6 +9,7 @@
 #include "Funzioni.h"
 #include "Player.h"
 #include "Screen.h"
+#include "Platform.h"
 
 using namespace std;
 #define SPACE 32
@@ -26,7 +27,11 @@ void Cursore(bool visible)
 	SetConsoleCursorInfo(output, &infoCursore);
 }
 
-void Movement(bool* gameOver, Player& p) {		//passo p per riferimento in modo da poterla modificare
+void Movement(bool* gameOver, Player& p,Screen& schermo) {		//passo p per riferimento in modo da poterla modificare
+	Platform plats = schermo.getPlatforms();
+	if (!plats.isThere(p.getX(), p.getY())) {//statement che si occupa di controllare se il giocatore è su una piattaforma
+		p.increaseY(2);
+	}
 	if (_kbhit())
 	{
 		//salvo il tasto che è stato premuto
@@ -62,6 +67,13 @@ void Movement(bool* gameOver, Player& p) {		//passo p per riferimento in modo da
 		case 'x':
 		case 'X':
 			*gameOver = true;
+			break;
+			//tasto per sparare
+		case 'e':
+		case 'E':
+			if (p.fire()) {
+
+			}
 			break;
 		default:
 			break;

@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Funzioni.h"
+#include "Bullet.h"
 
 using namespace std;
 
@@ -54,7 +55,7 @@ p_livello Screen::generateLevel(int difficolta) {
 	ret->enemiesList = Enemy();
 	ret->enemiesList.generateEnemies(5, ret->p);
 
-	ret->e = Entity();
+	//ret->e = Entity();
 
 	this->difficolta++;
 	return ret;
@@ -75,7 +76,7 @@ void Screen::print() {
 	cout << (char)188;
 
 	//stampa contenuto dello schermo
-	level->e.print();
+	//level->e.print();
 	level->p.print();
 	level->enemiesList.print();
 }
@@ -85,4 +86,6 @@ int Screen::getDifficolta() {
 void Screen::setDifficolta(int diff) {
 	difficolta = diff;
 }
-
+Platform Screen::getPlatforms() {
+	return level->p;
+}

@@ -1,7 +1,8 @@
 #include "Player.h"
-Player::Player(int x, int y, char symbol, int punti, int vite) : Entity(x, y, symbol) {
+Player::Player(int x, int y, char symbol, int punti, int vite, bool ammo) : Entity(x, y, symbol) {
 	this->punti = punti;
 	this->vite = vite;
+	this->ammo = ammo;
 }
 
 void Player::increaseX(int x) {
@@ -36,4 +37,12 @@ bool Player::decreaseVite(int vt) {
 	if(vt > 0)
 		vite -= vt;
 	return vite > 0;
+}
+bool Player::fire() {
+	if (ammo)
+	{
+		ammo = false;
+		return true;
+	}
+	return false;
 }

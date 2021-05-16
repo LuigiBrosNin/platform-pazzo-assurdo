@@ -2,13 +2,15 @@
 #include "Entity.h"
 #include "Platform.h"
 #include "Enemy.h"
+#include "Bullet.h"
 
 struct livello
 {
 	livello *next;
 	livello *prev;
+	Bullet b;
 	Platform p;
-	Entity e;
+	//Entity e;
 	Enemy enemiesList;
 	//TODO: array di Bonus (Enemy e Bonus vanno generati sulle coordinate dove c'è già una platform, in modo da renderli raggiungibili dal player)
 };
@@ -28,4 +30,5 @@ class Screen
 		void print();
 		int getDifficolta();
 		void setDifficolta(int diff);
+		Platform getPlatforms();
 };
