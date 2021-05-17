@@ -46,3 +46,11 @@ bool Player::fire() {
 	}
 	return false;
 }
+
+void Player::refill() {
+	ammo = true;
+}
+
+bool Player::getAmmo() {
+	return ammo;
+}

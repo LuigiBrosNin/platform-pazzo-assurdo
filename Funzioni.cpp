@@ -72,7 +72,9 @@ void Movement(bool* gameOver, Player& p,Screen& schermo) {		//passo p per riferi
 		case 'e':
 		case 'E':
 			if (p.fire()) {
-
+				Bullet b = schermo.getBullet();
+				b.fireb(p);
+				schermo.setBullet(b);
 			}
 			break;
 		default:
@@ -86,6 +88,7 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo) 
 	if (p.getX() >= width) {
 		schermo.nextLevel();
 		p.setX(0);
+		p.refill();
 	}
 	else if (p.getX() < 0) {
 		bool esistePrec = schermo.prevLevel();
@@ -102,6 +105,10 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo) 
 		p.setY(0);
 	if (p.getVite() <= 0)
 		*gameOver = true;
+	//gestione movement del bullet
+	Bullet b = schermo.getBullet();
+	b.increaseX(1, width);
+	schermo.setBullet(b);
 }
 
 void Clear() {
@@ -137,5 +144,10 @@ void PrintInfo(int width, int height, Player p, Screen schermo) {  //funzione pe
 	MoveCursor(width + 5, 3);
 	cout << "Livello: " << schermo.getDifficolta();
 	MoveCursor(width + 5, 4);
+	cout << "Ammo: ";
+	if (p.getAmmo()) cout << "1";
+	else cout << "0";
+	MoveCursor(width + 5, 5);
 	cout << "X: " << p.getX() << " Y: "<< p.getY();
+
 }

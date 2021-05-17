@@ -18,5 +18,7 @@ public:
 	void increasePunti(int pt);
 	bool decreaseVite(int vt);		//true se le vite sono > 0, false se è morto
 	bool fire();
+	void refill(); //ridà 1 ammo al giocatore
+	bool getAmmo();
 };
 

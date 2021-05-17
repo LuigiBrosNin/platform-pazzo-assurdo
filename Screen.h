@@ -8,8 +8,8 @@ struct livello
 {
 	livello *next;
 	livello *prev;
-	Bullet b;
 	Platform p;
+	Bullet b;
 	//Entity e;
 	Enemy enemiesList;
 	//TODO: array di Bonus (Enemy e Bonus vanno generati sulle coordinate dove c'è già una platform, in modo da renderli raggiungibili dal player)
@@ -31,4 +31,6 @@ class Screen
 		int getDifficolta();
 		void setDifficolta(int diff);
 		Platform getPlatforms();
+		Bullet getBullet();
+		void setBullet(Bullet b);
 };

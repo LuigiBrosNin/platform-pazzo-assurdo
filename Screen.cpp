@@ -51,7 +51,7 @@ p_livello Screen::generateLevel(int difficolta) {
 	//ret->e = Entity(rand() % width, rand() % height, 'U');
 	ret->p = Platform();
 	ret->p.generate(difficolta);
-
+	ret->b = Bullet();
 	ret->enemiesList = Enemy();
 	ret->enemiesList.generateEnemies(5, ret->p);
 
@@ -76,7 +76,7 @@ void Screen::print() {
 	cout << (char)188;
 
 	//stampa contenuto dello schermo
-	//level->e.print();
+	level->b.print();
 	level->p.print();
 	level->enemiesList.print();
 }
@@ -88,4 +88,13 @@ void Screen::setDifficolta(int diff) {
 }
 Platform Screen::getPlatforms() {
 	return level->p;
+}
+
+Bullet Screen::getBullet() {
+	return level->b;
+}
+
+void Screen::setBullet(Bullet b) 
+{
+	this->level->b = b;
 }
