@@ -10,6 +10,13 @@
 Platform::Platform(int x, int y, char symbol, int wh, int he) : Entity(x, y, symbol) {
 	this->height = int(he/2);//perché solo metà dello schermo è occupato dalle piattaforme
 	this->width = wh;
+	for (int i = 0; i < height; i++) //inizializzazione inutile ma sempre meglio inizializzare anche se non serve
+	{
+		for (int j = 0; j < width; j++)
+		{
+			this->positions[j][i] = 0;
+		}
+	}
 }
 void Platform::generate(int difficulty) {
 	srand((int)time(0));

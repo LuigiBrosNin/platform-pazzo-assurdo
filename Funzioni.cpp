@@ -109,6 +109,9 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo) 
 	Bullet b = schermo.getBullet();
 	b.increaseX(1, width);
 	schermo.setBullet(b);
+	//check per vedere se hai preso dei bonus
+	Bonus money = schermo.getBonus();
+	p.setPunti(p.getPunti() + money.getValue(p.getX(), p.getY()));
 }
 
 void Clear() {

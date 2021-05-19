@@ -1,4 +1,2 @@
-﻿  Funzioni.cpp
-C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(135,16): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
-C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\Funzioni.cpp(135,19): warning C4838: conversion from 'int' to 'SHORT' requires a narrowing conversion
+﻿  Bonus.cpp
   MarioBrosUnibo.vcxproj -> C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe

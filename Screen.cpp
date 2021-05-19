@@ -54,7 +54,8 @@ p_livello Screen::generateLevel(int difficolta) {
 	ret->b = Bullet();
 	ret->enemiesList = Enemy();
 	ret->enemiesList.generateEnemies(5, ret->p);
-
+	ret->money = Bonus();
+	ret->money.generateBonus(ret->p, difficolta);
 	//ret->e = Entity();
 
 	this->difficolta++;
@@ -79,6 +80,7 @@ void Screen::print() {
 	level->b.print();
 	level->p.print();
 	level->enemiesList.print();
+	if (level->money.getNum() > 0) level->money.print();
 }
 int Screen::getDifficolta() {
 	return difficolta;
@@ -97,4 +99,13 @@ Bullet Screen::getBullet() {
 void Screen::setBullet(Bullet b) 
 {
 	this->level->b = b;
+}
+
+Bonus Screen::getBonus() {
+	return level->money;
+}
+
+void Screen::setBonus(Bonus b)
+{
+	this->level->money = b;
 }
