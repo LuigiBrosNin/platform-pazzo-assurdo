@@ -1,4 +1,5 @@
-#pragma once
+#pragma once		// Specifica che il compilatore include il file di intestazione una sola volta, durante la compilazione di un file di codice sorgente
+
 #include "Entity.h"
 #include "Platform.h"
 #include "Enemy.h"
@@ -12,9 +13,7 @@ struct livello
 	Platform p;
 	Bullet b;
 	Bonus money;
-	//Entity e;
 	Enemy enemiesList;
-	//TODO: array di Bonus (Enemy e Bonus vanno generati sulle coordinate dove c'è già una platform, in modo da renderli raggiungibili dal player)
 };
 typedef livello *p_livello;
 
@@ -26,10 +25,10 @@ class Screen
 		int difficolta;
 	public:
 		Screen(int width, int height, int difficolta=1);
-		void nextLevel();
-		bool prevLevel();	//true se esiste un livello precedente, false se non esiste (1° livello)
-		p_livello generateLevel(int difficolta);		//genera un livello e lo restituisce
-		void print();
+		p_livello generateLevel(int difficolta);	// Genera i contenuti del livello attuale
+		void nextLevel();	// Avanza al livello successivo
+		bool prevLevel();	// Ritorna al livello precedente
+		void print();	// Stampa il livello
 		int getDifficolta();
 		void setDifficolta(int diff);
 		Platform getPlatforms();
@@ -37,4 +36,5 @@ class Screen
 		void setBullet(Bullet b);
 		Bonus getBonus();
 		void setBonus(Bonus b);
+		Enemy getEnemy();
 };

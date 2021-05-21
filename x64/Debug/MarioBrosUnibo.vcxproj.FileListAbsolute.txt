@@ -1,2 +1,3 @@
 C:\Users\Luizo\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe
 C:\Users\Vittorio\Documents\GitHub\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe
+C:\Users\Vittorio\source\repos\LuigiBrosNin\platform-pazzo-assurdo\x64\Debug\MarioBrosUnibo.exe

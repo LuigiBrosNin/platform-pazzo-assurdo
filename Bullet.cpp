@@ -1,10 +1,12 @@
 #include "Bullet.h"
 
-Bullet::Bullet(int x, int y, char symbol, bool visible):Entity(x, y, symbol) {
+Bullet::Bullet(int x, int y, char symbol, bool visible) : Entity(x, y, symbol)
+{
 	this->visible = visible;
 }
 
-bool Bullet::isVisible() {
+bool Bullet::isVisible()
+{
 	return visible;
 }
 
@@ -16,7 +18,8 @@ void Bullet::fireb(Player p)
 	this->symbol = 'O';
 }
 
-void Bullet::increaseX(int x, int width) {
+void Bullet::increaseX(int x, int width)
+{
 	if (x > 0 && this->x + x < width && visible)
 		this->x += x;
 	else

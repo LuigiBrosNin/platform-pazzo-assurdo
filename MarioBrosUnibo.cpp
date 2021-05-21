@@ -20,14 +20,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
 #include "Funzioni.h"
 #include "Player.h"
 #include "Entity.h"
 #include "Screen.h"
+
 using namespace std;
 
-
-//variabili globali
 int width = 50, height = 10; // height != dispari
 Player p = Player(0, height-2, '@', 0, 1);
 Screen schermo = Screen(width, height);
@@ -35,26 +35,25 @@ bool gameOver = false;
 
 int main()
 {
-    Cursore(false);     //toglie la visibilità del cursore
-    WaitScreen();       //schermata di attesa
+    Cursore(false);
+    WaitScreen();
 
     while (!gameOver) 
     {
         Clear();
 
-        //gestore movimento e input
+        // Creazione del gestore per gli input da tastiera
         Movement(&gameOver, p, schermo);
         Handler(width, height, &gameOver, p, schermo);
 
-        //stampa
+        // Stampa a schermo di tutte le componenti del livello
         schermo.print();
         p.print();
         PrintInfo(width, height, p, schermo);
+
         Sleep(50);
     }
 
     Clear();
     cout << "GAME OVER";
-    
 }
-
