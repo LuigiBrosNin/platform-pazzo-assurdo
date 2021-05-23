@@ -37,4 +37,5 @@ class Screen
 		Bonus getBonus();
 		void setBonus(Bonus b);
 		Enemy getEnemy();
+		void setEnemy(Enemy e);
 };

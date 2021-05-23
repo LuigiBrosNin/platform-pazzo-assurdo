@@ -19,6 +19,9 @@ class Enemy : public Entity
 {
 	protected:
 		enemyPosition enemies;
+		int movementSleepCount;
+		int fireSleepCount;
+		bool directionUp;
 
 	public:
 		Enemy (int x = -1, int y = -1, int type = -1, char symbol = 'S');

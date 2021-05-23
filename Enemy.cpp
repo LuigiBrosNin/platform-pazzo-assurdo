@@ -5,13 +5,12 @@
 #include "Funzioni.h"
 #include "Bullet.h"
 
-int movementSleepCount = -1, fireSleepCount = -1;
-bool directionUp = true;
-
 Enemy::Enemy(int x, int y, int type, char symbol) : Entity (x, y, symbol)
 {
-	this->enemies = new enemy;
-	this->enemies->nextEnemy = NULL;
+	this->enemies = NULL;
+	this->movementSleepCount = -1;
+	this->fireSleepCount = -1;
+	this->directionUp = true;
 }
 
 void Enemy::generateEnemies(int enemyNumber, Platform generablePositions)
@@ -51,8 +50,8 @@ void Enemy::print (Platform generablePositions)
 {
 	char s = '0';
 	enemyPosition list = this->enemies;
-
-	while (list->nextEnemy != NULL)
+	
+	while (list != NULL)
 	{
 		switch (list->type)
 		{
@@ -88,15 +87,15 @@ void Enemy::print (Platform generablePositions)
 					}
 					else if (list->direction == 2)	// Movimento verso destra
 					{
-						if ((list->x + 2) < generablePositions.getWidth() && generablePositions.isThere(list->x + 2, list->y))
-							list->x += 2;
+						if ((list->x + 1) < generablePositions.getWidth() && generablePositions.isThere(list->x + 1, list->y))
+							list->x += 1;
 						else
 							list->direction = 3;
 					}
 					else if (list->direction == 3)	// Movimento verso sinistra
 					{
-						if ((list->x - 2) >= 0 && generablePositions.isThere(list->x - 2, list->y))
-							list->x -= 2;
+						if ((list->x - 1) >= 0 && generablePositions.isThere(list->x - 1, list->y))
+							list->x -= 1;
 						else
 							list->direction = 2;
 					}
@@ -134,6 +133,8 @@ void Enemy::print (Platform generablePositions)
 				}
 
 				break;
+			default:
+				break;
 			}
 		}
 
@@ -144,35 +145,42 @@ void Enemy::print (Platform generablePositions)
 
 bool Enemy::enemyHandler(Player player, Bullet bullet)
 {
-	enemyPosition head = enemies, previousNode = enemies, analyzedNode = enemies;
-
-	while (analyzedNode != NULL)
+	enemyPosition updated = NULL, copy = this->enemies, tmp = NULL;
+	bool update = false;
+	while (copy != NULL) //scorre una copia della lista attuale
 	{
-		if ((player.getX() == analyzedNode->x) && (player.getY() == analyzedNode->y))		// Giocatore colpito da un nemico
-			return true;
-		else if ((bullet.getX() == analyzedNode->x) && (bullet.getY() == analyzedNode->y))		// Nemico colpito da un proiettile
+		if (copy->x == player.getX() && copy->y == player.getY()) //controllo per vedere se il player è dentro un nemico
 		{
-			if (analyzedNode = head)
+			if (player.getPrevy() < copy->y) //se lo è controllo se viene da sopra (in quel caso lo stompa)
 			{
-				head = head->nextEnemy;
-				previousNode = head;
+				update = true;
+				copy->type = -1;
 			}
-			else
-			{
-				analyzedNode = analyzedNode->nextEnemy;
-				previousNode->nextEnemy = analyzedNode;
-			
-				if (head == previousNode)
-					head->nextEnemy = analyzedNode;
-			}
+			else return true; //altrimenti dovrebbe togliere una vita, ma qui causa insta game over, VITTORIO, GET ON IT!
 		}
-		else
+		else if (bullet.getX() == copy->x && bullet.getY() == copy->y) //controllo se invece un proiettile è addosso al nemico, in caso cambia il suo tipo in -1, che corrisponde nel codice sotto ad un nemico da eliminare
 		{
-			previousNode = analyzedNode;
-			analyzedNode = analyzedNode->nextEnemy;
+			update = true;
+			copy->type = -1;
 		}
+		copy = copy->nextEnemy;
 	}
-
-	enemies = head;
+	if (update) //se un update è necessario alla lista, aggiorna la lista
+	{
+		copy = this->enemies;
+		while (copy != NULL) {
+			if (copy->type != -1)
+			{
+				tmp = new enemy;
+				tmp->type = copy->type;
+				tmp->x = copy->x;
+				tmp->y = copy->y;
+				tmp->nextEnemy = updated;
+				updated = tmp;
+			}
+			copy = copy->nextEnemy;
+		}
+		this->enemies = updated;
+	}
 	return false;
 }

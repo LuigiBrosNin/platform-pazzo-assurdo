@@ -6,6 +6,7 @@
 
 Bonus::Bonus(int x, int y, char symbol)
 {
+	this->symbol = '$';
 	this->listaBonus = NULL;
 	this->num = 0;
 }
@@ -21,7 +22,7 @@ void Bonus::generateBonus(Platform p, int diff)
 	 */
 
 	this->listaBonus = NULL;
-	int i = 2;	//int i = (rand() % 2) + 1;			// !! Modifica temporanea (per la visualizzazione costante di tre bonus)
+	int i = 3;	//int i = (rand() % 2) + 1;			// !! Modifica temporanea (per la visualizzazione costante di tre bonus)
 	this->num = i;
 
 	while (i > 0)
@@ -54,60 +55,26 @@ int Bonus::getValue(int x, int y)
 	 * rimuovendolo dal livello e quindi dalla lista, creata precedentemente.
 	 */
 
-	BonusList head = this->listaBonus, prev = this->listaBonus;
+	BonusList papere = NULL, copy = this->listaBonus, tmp =new boon;
 	int ret = 0;
-
-	while (this->listaBonus != NULL)
+	while (copy != NULL) //scorre una copia della lista attuale
 	{
-		/*
-		 *	!! Problemi riscontrati:
-		 *		1) La testa rimane un problema. Ancora. Pur creando una nuova lista, il bonus rimane al suo posto e, anzi, continua perennemente
-		 *         ad incrementare il punteggio. Ho provato con dei flag su ogni condizione (per fare in modo che ad ogni livello venisse ripetuta
-		 *		   la cancellazione del primo, del secondo e del terzo bonus solo una volta per ognuna delle ipotesi) e ho provato ad iterare il while
-		 *		   per il numero di bonus creati ma non c'è stato nulla da fare (anzi, in quest'ultimo caso sembrava addirittura che 'listaBonus'
-		 *		   decidesse di non esistere prima ancora di vivere);
-		 *		2) Il terzo caso (eliminazione della coda) non sempre si verifica, non ho capito perché. Spesso capita che esista la testa e "due
-		 *		   elementi intermedi" (puoi vederlo dal 'ret' modificato), poche volte che esistano tre elementi distinti
-		 * 
-		 *		I casi che si verificano sempre sono quelli del 'ret' uguale a uno (costantemente), o almeno in ogni esecuzione che ho testato quello
-		 *		c'era sempre (e puoi verificarlo settando 'i = 1', ovviamente), e del 'ret' uguale a due... 
-		 */
-
-		if (this->listaBonus->x == x && this->listaBonus->y == y && num != 0)
+		if (copy->x == x && copy->y == y) //se il player si trova nella stessa casella ottiene il valore e non salva le coordinate nella nuova lista
 		{
-			//ret = this->listaBonus->value;		// !! Modifica temporanea (istruzione originale)
-			this->num--;
-
-			BonusList newList = new boon;
-
-			if (this->listaBonus == head)
-			{
-				ret = 1;	// !! Modifica temporanea (per la visualizzazione del "tipo" di bonus che si vuole cancellare)
-				newList = this->listaBonus->next;
-				this->listaBonus = newList;
-			}
-			else if (prev == head)
-			{
-				ret = 2;	// !! Modifica temporanea (per la visualizzazione del "tipo" di bonus che si vuole cancellare)
-				newList = head;
-				newList->next = this->listaBonus->next;
-				this->listaBonus = newList;
-			}
-			else
-			{
-				ret = 3;	// !! Modifica temporanea (per la visualizzazione del "tipo" di bonus che si vuole cancellare)
-				newList = head;
-				newList = newList->next;
-				newList->next = NULL;
-			}
+			ret = copy->value;
 		}
-		else
+		else //altrimenti salva il bonus nella nuova lista
 		{
-			prev = this->listaBonus;
-			this->listaBonus = this->listaBonus->next;
+			tmp = new boon;
+			tmp->value = copy->value;
+			tmp->x = copy->x;
+			tmp->y = copy->y;
+			tmp->next = papere;
+			papere = tmp;
 		}
+		copy = copy->next;
 	}
-
+	this->listaBonus = papere; //assegna la lista di bonus aggiornata alla listaBonus
 	return ret;
 }
 
@@ -117,7 +84,7 @@ void Bonus::print()
 	
 	while (temp != NULL)
 	{
-		PrintAt(temp->x + 1, temp->y + 1, '$');
+		PrintAt(temp->x + 1, temp->y + 1, symbol);
 		temp = temp->next;
 	}
 }

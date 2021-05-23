@@ -101,12 +101,11 @@ void Screen::print()
 
 	cout << (char)188;
 
-	level->b.print();
+	level->money.print();
+
 	level->p.print();
 	level->enemiesList.print(level->p);
-
-	if (level->money.getNum() > 0)
-		level->money.print();
+	level->b.print();
 }
 
 int Screen::getDifficolta()
@@ -147,4 +146,9 @@ void Screen::setBonus(Bonus b)
 Enemy Screen::getEnemy()
 {
 	return level->enemiesList;
+}
+
+void Screen::setEnemy(Enemy e)
+{
+	this->level->enemiesList = e;
 }

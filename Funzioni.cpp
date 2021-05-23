@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Screen.h"
 #include "Platform.h"
+#include "Bonus.h"
 
 using namespace std;
 
@@ -151,10 +152,12 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo)
 	// Gestione dei nemici
 	Enemy e = schermo.getEnemy();
 	*gameOver = e.enemyHandler(p, b);
+	schermo.setEnemy(e);
 
 	// Gestione dei bonus
 	Bonus money = schermo.getBonus();
 	p.setPunti(p.getPunti() + money.getValue(p.getX(), p.getY()));
+	schermo.setBonus(money);
 }
 
 void Clear()		// Pulisce lo schermo

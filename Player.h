@@ -5,7 +5,7 @@
 class Player : public Entity
 {
 	protected:
-		int punti, vite;
+		int punti, vite, prevy;
 		bool ammo;
 
 	public:
@@ -23,4 +23,5 @@ class Player : public Entity
 		void increasePunti(int pt);
 		bool decreaseVite(int vt);
 		bool fire();	// Riduce la quantità di munizioni disponibili
+		int getPrevy();
 };

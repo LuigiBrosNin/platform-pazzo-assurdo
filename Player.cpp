@@ -5,25 +5,30 @@ Player::Player(int x, int y, char symbol, int punti, int vite, bool ammo) : Enti
 	this->punti = punti;
 	this->vite = vite;
 	this->ammo = ammo;
+	this->prevy = y;
 }
 
 void Player::increaseX(int x)
 {
+	prevy = this->y;
 	Entity::increaseX(x);
 }
 
 void Player::decreaseX(int x)
 {
+	prevy = this->y;
 	Entity::decreaseX(x);
 }
 
 void Player::increaseY(int y)
 {
+	prevy = this->y;
 	Entity::increaseY(y);
 }
 
 void Player::decreaseY(int y)
 {
+	prevy = this->y;
 	Entity::decreaseY(y);
 }
 
@@ -80,4 +85,8 @@ bool Player::fire()
 	}
 
 	return false;
+}
+
+int Player::getPrevy() {
+	return this->prevy;
 }
