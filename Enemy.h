@@ -11,6 +11,7 @@ struct enemy
 	int y;
 	int type;
 	int direction;	// Direzione verso cui si muoverà il nemico ('0' = basso; '1' = alto; '2' =  destra; '3' = sinistra)
+	Bullet b;
 	enemy* nextEnemy;
 };
 typedef enemy* enemyPosition;

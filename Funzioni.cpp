@@ -151,7 +151,14 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo)
 
 	// Gestione dei nemici
 	Enemy e = schermo.getEnemy();
-	*gameOver = e.enemyHandler(p, b);
+	if (e.enemyHandler(p, b))
+	{
+		p.decreaseVite(1);
+
+		if (p.getVite() < 1)
+			*gameOver = true;
+	}
+		
 	schermo.setEnemy(e);
 
 	// Gestione dei bonus

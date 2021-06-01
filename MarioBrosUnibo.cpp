@@ -28,8 +28,8 @@
 
 using namespace std;
 
-int width = 50, height = 10; // height != dispari
-Player p = Player(0, height-2, '@', 0, 1);
+int width = 50, height = 10;    // 'height' != dispari
+Player p = Player(0, height-2, '@', 0, 2);
 Screen schermo = Screen(width, height);
 bool gameOver = false;
 

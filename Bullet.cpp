@@ -18,6 +18,14 @@ void Bullet::fireb(Player p)
 	this->symbol = 'O';
 }
 
+void Bullet::enemyFire(int x, int y)
+{
+	visible = true;
+	this->x = x + 1;
+	this->y = y;
+	this->symbol = 'O';
+}
+
 void Bullet::increaseX(int x, int width)
 {
 	if (x > 0 && this->x + x < width && visible)

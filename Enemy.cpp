@@ -116,23 +116,28 @@ void Enemy::print (Platform generablePositions)
 
 					if (list->direction == 0)	// Spara verso il basso
 					{
-						
+						//list->b.enemyFire(list->x, list->y);
+						//schermo.setBullet(list->b);
 					}
 					else if (list->direction == 1)	// Spara verso l'alto
 					{
-						
+						//list->b.enemyFire(list->x, list->y);
+						//schermo.setBullet(list->b);
 					}
 					else if (list->direction == 2)	// Spara verso destra
 					{
-						
+						//list->b.enemyFire(list->x, list->y);
+						//schermo.setBullet(list->b);
 					}
 					else if (list->direction == 3)	// Spara verso sinistra
 					{
-						
+						//list->b.enemyFire(list->x, list->y);
+						//schermo.setBullet(list->b);
 					}
 				}
 
 				break;
+
 			default:
 				break;
 			}
@@ -146,29 +151,39 @@ void Enemy::print (Platform generablePositions)
 bool Enemy::enemyHandler(Player player, Bullet bullet)
 {
 	enemyPosition updated = NULL, copy = this->enemies, tmp = NULL;
-	bool update = false;
-	while (copy != NULL) //scorre una copia della lista attuale
+	bool update = false, touched = false;
+
+	/*
+	 * Scorro una copia della lista attuale per vedere cosa sta facendo il giocatore:
+	 *	- se tocca un nemico da sopra ("saltandoci") questi viene eliminato;
+	 *	- se un proiettile sparato tocca un nemico questi viene eliminato;
+	 *	- se tocca un nemico da altre direzioni senza sparargli, rimuove una vita.
+	 */
+	while (copy != NULL)
 	{
-		if (copy->x == player.getX() && copy->y == player.getY()) //controllo per vedere se il player è dentro un nemico
+		if (copy->x == player.getX() && copy->y == player.getY())
 		{
-			if (player.getPrevy() < copy->y) //se lo è controllo se viene da sopra (in quel caso lo stompa)
-			{
-				update = true;
-				copy->type = -1;
-			}
-			else return true; //altrimenti dovrebbe togliere una vita, ma qui causa insta game over, VITTORIO, GET ON IT!
+			if (player.getPrevy() >= copy->y)	// Controllo se il giocatore tocca il nemico senza caderci da sopra
+				touched = true;
+			
+			update = true;
+			copy->type = -1;
 		}
-		else if (bullet.getX() == copy->x && bullet.getY() == copy->y) //controllo se invece un proiettile è addosso al nemico, in caso cambia il suo tipo in -1, che corrisponde nel codice sotto ad un nemico da eliminare
+		else if (bullet.getX() == copy->x && bullet.getY() == copy->y)	// Controllo del proiettile
 		{
 			update = true;
 			copy->type = -1;
 		}
+
 		copy = copy->nextEnemy;
 	}
-	if (update) //se un update è necessario alla lista, aggiorna la lista
+
+	if (update)		// Aggiornamento della lista dei nemici
 	{
 		copy = this->enemies;
-		while (copy != NULL) {
+
+		while (copy != NULL)
+		{
 			if (copy->type != -1)
 			{
 				tmp = new enemy;
@@ -178,9 +193,12 @@ bool Enemy::enemyHandler(Player player, Bullet bullet)
 				tmp->nextEnemy = updated;
 				updated = tmp;
 			}
+
 			copy = copy->nextEnemy;
 		}
+
 		this->enemies = updated;
 	}
-	return false;
+
+	return touched;
 }

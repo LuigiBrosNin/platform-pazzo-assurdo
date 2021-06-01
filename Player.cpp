@@ -68,12 +68,10 @@ void Player::increasePunti(int pt)
 		punti += pt;
 }
 
-bool Player::decreaseVite(int vt)
+void Player::decreaseVite(int vt)
 {
-	if(vt > 0)
+	if (vt > 0)
 		vite -= vt;
-
-	return vite > 0;
 }
 
 bool Player::fire()

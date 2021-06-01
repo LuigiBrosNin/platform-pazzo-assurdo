@@ -9,7 +9,7 @@ class Player : public Entity
 		bool ammo;
 
 	public:
-		Player(int x, int y, char symbol = '@', int punti = 0, int vite = 10, bool ammo = true);
+		Player(int x, int y, char symbol = '@', int punti = 0, int vite = 0, bool ammo = true);
 		void increaseX(int x);
 		void increaseY(int y);
 		void decreaseX(int x);
@@ -21,7 +21,7 @@ class Player : public Entity
 		bool getAmmo();	// Restituisce la quantità di munizioni rimasta
 		void refill();	// Aumenta la quantità di munizioni disponibili
 		void increasePunti(int pt);
-		bool decreaseVite(int vt);
+		void decreaseVite(int vt);
 		bool fire();	// Riduce la quantità di munizioni disponibili
 		int getPrevy();
 };
