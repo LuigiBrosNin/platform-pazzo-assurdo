@@ -10,5 +10,5 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo);
 void PrintInfo(int width, int height, Player p, Screen schermo);	//stampa casella con informazioni di base sulla partita
 void Clear();	// Pulisce lo schermo
 void WaitScreen();	// Schermata di attesa ad inizio partita
-void PrintAt(int x, int y, char what);
+void PrintAt(int x, int y, char what, int prevx=-1, int prevy=-1);
 void MoveCursor(int x, int y);

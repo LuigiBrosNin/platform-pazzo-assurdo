@@ -21,15 +21,19 @@ void Bullet::fireb(Player p)
 void Bullet::enemyFire(int x, int y)
 {
 	visible = true;
-	this->x = x + 1;
+	this->x = x - 1;
 	this->y = y;
 	this->symbol = 'O';
 }
 
 void Bullet::increaseX(int x, int width)
 {
-	if (x > 0 && this->x + x < width && visible)
+	if (x > 0 && this->x + x < width && visible) 
+	{
+		prevy = this->y;
+		prevx = this->x;
 		this->x += x;
+	}
 	else
 	{
 		visible = false;

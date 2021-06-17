@@ -52,7 +52,7 @@ p_livello Screen::generateLevel(int difficolta)
 void Screen::nextLevel()
 {
 	// - Funzione che permette la visualizzazione "in avanti" di un livello precedentemente generato -
-
+	Clear();
 	if (level->next != NULL)
 		level = level->next;
 	else
@@ -67,7 +67,7 @@ void Screen::nextLevel()
 bool Screen::prevLevel()
 {
 	// - Funzione che permette la visualizzazione "all'indietro" di un livello precedentemente generato -
-
+	Clear();
 	if (level->prev != NULL)
 	{
 		level = level->prev;
@@ -81,17 +81,17 @@ void Screen::print()
 {
 	// - Funzione che stampa lo spazio di gioco
 
-	cout << (char)201;
+	PrintAt(0, 0, (char)201);
 
 	for (int i = 0; i < width; i++)
-		cout << char(205);
+		PrintAt(i+1, 0, (char)205);
 
-	cout << (char)187 << endl;
+	PrintAt(width+1, 0, (char)187);
 
 	for (int i = 0; i < height; i++)
 	{
 		PrintAt(0, i+1, (char)186);
-		PrintAt(width+1, i + 1, (char)186);
+		PrintAt(width+1, i+1, (char)186);
 	}
 
 	cout << endl << (char)200;

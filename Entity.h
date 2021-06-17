@@ -10,7 +10,7 @@ class Entity
 		 * per dire, potrebbe essere utile reimpostarlo alla coordinata di default qui precedentemente definita)
 		 */
 		int defaultX, defaultY;
-		int x, y;
+		int x, y, prevx, prevy;
 		char symbol;
 	public:
 		Entity(int x = 0, int y = 0, char symbol='*');

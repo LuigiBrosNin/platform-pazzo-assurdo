@@ -40,7 +40,7 @@ int main()
 
     while (!gameOver) 
     {
-        Clear();
+        //Clear();
 
         // Creazione del gestore per gli input da tastiera
         Movement(&gameOver, p, schermo);

@@ -125,7 +125,7 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo)
 	{
 		schermo.nextLevel();
 		p.setX(0);
-		p.refill();
+		p.addAmmo(1);
 	}
 	else if (p.getX() < 0)
 	{
@@ -172,8 +172,12 @@ void Clear()		// Pulisce lo schermo
 	system("cls");
 }
 
-void PrintAt(int x, int y, char what)
+void PrintAt(int x, int y, char what ,int prevx, int prevy)
 {
+	if (prevx > 0 && prevy > 0) {
+		MoveCursor(prevx, prevy);
+		cout << " ";
+	}
 	MoveCursor(x, y);
 	cout << what;
 }
@@ -200,10 +204,7 @@ void PrintInfo(int width, int height, Player p, Screen schermo)
 
 	MoveCursor(width + 5, 4);
 	cout << "Proiettili: ";
-	if (p.getAmmo())
-		cout << "1";
-	else
-		cout << "0";
+		cout << p.getAmmo();
 	
 	MoveCursor(width + 5, 5);
 	cout << "X: " << p.getX() << " Y: "<< p.getY();

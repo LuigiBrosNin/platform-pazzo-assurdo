@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int x, int y, char symbol, int punti, int vite, bool ammo) : Entity(x, y, symbol)
+Player::Player(int x, int y, char symbol, int punti, int vite, int ammo) : Entity(x, y, symbol)
 {
 	this->punti = punti;
 	this->vite = vite;
@@ -11,24 +11,28 @@ Player::Player(int x, int y, char symbol, int punti, int vite, bool ammo) : Enti
 void Player::increaseX(int x)
 {
 	prevy = this->y;
+	prevx = this->x;
 	Entity::increaseX(x);
 }
 
 void Player::decreaseX(int x)
 {
 	prevy = this->y;
+	prevx = this->x;
 	Entity::decreaseX(x);
 }
 
 void Player::increaseY(int y)
 {
 	prevy = this->y;
+	prevx = this->x;
 	Entity::increaseY(y);
 }
 
 void Player::decreaseY(int y)
 {
 	prevy = this->y;
+	prevx = this->x;
 	Entity::decreaseY(y);
 }
 
@@ -57,9 +61,9 @@ bool Player::getAmmo()
 	return ammo;
 }
 
-void Player::refill()
+void Player::addAmmo(int n)
 {
-	ammo = true;
+	ammo += n;
 }
 
 void Player::increasePunti(int pt)
@@ -76,9 +80,9 @@ void Player::decreaseVite(int vt)
 
 bool Player::fire()
 {
-	if (ammo)
+	if (ammo > 0)
 	{
-		ammo = false;
+		ammo -= 1;
 		return true;
 	}
 

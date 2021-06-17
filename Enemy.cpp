@@ -53,6 +53,8 @@ void Enemy::print (Platform generablePositions)
 	
 	while (list != NULL)
 	{
+		prevx = list->x;
+		prevy = list->y;
 		switch (list->type)
 		{
 			case 0:		// Nemici statici
@@ -143,7 +145,7 @@ void Enemy::print (Platform generablePositions)
 			}
 		}
 
-		PrintAt(list->x + 1, list->y + 1, s);
+		PrintAt(list->x + 1, list->y + 1, s, prevx+1, prevy+1);
 		list = list->nextEnemy;
 	}
 }
