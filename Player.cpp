@@ -56,14 +56,14 @@ void Player::setVite(int vt)
 	vite = vt;
 }
 
-bool Player::getAmmo()
+int Player::getAmmo()
 {
 	return ammo;
 }
 
 void Player::addAmmo(int n)
 {
-	ammo += n;
+	ammo =ammo + n;
 }
 
 void Player::increasePunti(int pt)
@@ -91,4 +91,16 @@ bool Player::fire()
 
 int Player::getPrevy() {
 	return this->prevy;
+}
+
+int Player::getPrevx() {
+	return this->prevx;
+}
+
+void Player::setPrevy(int y) {
+	this->prevy = y;
+}
+
+void Player::setPrevx(int x) {
+	this->prevx = x;
 }

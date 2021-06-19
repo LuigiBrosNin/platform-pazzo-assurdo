@@ -102,10 +102,9 @@ void Screen::print()
 	cout << (char)188;
 
 	level->money.print();
-
-	level->p.print();
-	level->enemiesList.print(level->p);
 	level->b.print();
+	level->enemiesList.print(level->p);
+	level->p.print();
 }
 
 int Screen::getDifficolta()

@@ -18,10 +18,13 @@ class Player : public Entity
 		void setPunti(int pt);
 		int getVite();
 		void setVite(int vt);
-		bool getAmmo();	// Restituisce la quantità di munizioni rimasta
+		int getAmmo();	// Restituisce la quantità di munizioni rimasta
 		void addAmmo(int n);	// Aumenta la quantità di munizioni disponibili
 		void increasePunti(int pt);
 		void decreaseVite(int vt);
 		bool fire();	// Riduce la quantità di munizioni disponibili
 		int getPrevy();
+		int getPrevx();
+		void setPrevx(int x);
+		void setPrevy(int y);
 };

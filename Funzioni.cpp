@@ -55,10 +55,10 @@ void Movement(bool* gameOver, Player& p, Screen& schermo)
 	
 	Platform plats = schermo.getPlatforms();
 
-	if (!plats.isThere(p.getX(), p.getY()))		// Se il giocatore è su una piattaforma, incrementa la coordinata 'Y' di 2
+	if (!plats.isThere(p.getX(), p.getY()))		// Se il giocatore non è su una piattaforma, incrementa la coordinata 'Y' di 2
 		p.increaseY(2);
 
-	if (_kbhit())
+	else if (_kbhit())
 	{
 		char tastoPremuto = _getch();
 		
@@ -125,21 +125,27 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo)
 	{
 		schermo.nextLevel();
 		p.setX(0);
-		p.addAmmo(1);
+		p.setPrevx(0);
+		//p.addAmmo(1);
 	}
 	else if (p.getX() < 0)
 	{
-		if (schermo.prevLevel())
+		if (schermo.prevLevel()) {
 			p.setX(width - 1);
-		else
+		}
+		else {
 			p.setX(0);
+		}
 	}
 
 	// Gestione dei limiti verticali dello spazio di gioco
-	if (p.getY() >= height-1)
+	if (p.getY() >= height - 1) {
 		p.setY(height - 2);
-	if (p.getY() < 0)
+		p.setPrevy(height - 2);
+	}
+	if (p.getY() < 0) {
 		p.setY(0);
+	}
 
 	if (p.getVite() <= 0)
 		*gameOver = true;
@@ -163,6 +169,8 @@ void Handler(int width, int height, bool* gameOver, Player& p, Screen& schermo)
 
 	// Gestione dei bonus
 	Bonus money = schermo.getBonus();
+	if (money.getType(p.getX(),p.getY()) == 1) p.setVite(p.getVite() + 1);
+	if (money.getType(p.getX(), p.getY()) == 2) p.addAmmo(1);
 	p.setPunti(p.getPunti() + money.getValue(p.getX(), p.getY()));
 	schermo.setBonus(money);
 }

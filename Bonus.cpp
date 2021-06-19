@@ -1,4 +1,4 @@
-#include <stdlib.h>
+﻿#include <stdlib.h>
 
 #include "Bonus.h"
 #include "Platform.h"
@@ -16,8 +16,8 @@ void Bonus::generateBonus(Platform p, int diff)
 	/*
 	 * - Funzione che genera i bonus di ogni livello -
 	 * Vengono generati da 1 a 3 bonus per ogni nuovo livello affrontato dal
-	 * giocatore. Per ogni bonus raccolto si ottiene un valore pari alla difficolt�
-	 * dell'attuale livello pi� un valore extra casuale (compreso tra 0 e 5),
+	 * giocatore. Per ogni bonus raccolto si ottiene un valore pari alla difficoltà
+	 * dell'attuale livello più un valore extra casuale (compreso tra 0 e 5),
 	 * il tutto moltiplicato per 10.
 	 */
 
@@ -37,10 +37,11 @@ void Bonus::generateBonus(Platform p, int diff)
 			BonusList temp = new boon;
 			temp->x = x;
 			temp->y = y;
-			temp->value = ((rand() % 5) + diff) * 10;
+			temp->type = rand() % 3;
+			if (temp->type == 0) temp->value = ((rand() % 5) + diff) * 10;
+			else temp->value = ((rand() % 5) + diff) * 5; //se è un bonus di vite o ammo, il valore è dimezzato
 			temp->next = this->listaBonus;
 			this->listaBonus= temp;
-
 			i--;
 		}
 	}
@@ -69,6 +70,7 @@ int Bonus::getValue(int x, int y)
 			tmp->value = copy->value;
 			tmp->x = copy->x;
 			tmp->y = copy->y;
+			tmp->type = copy->type;
 			tmp->next = papere;
 			papere = tmp;
 		}
@@ -78,12 +80,29 @@ int Bonus::getValue(int x, int y)
 	return ret;
 }
 
+int Bonus::getType(int x, int y) {
+	BonusList copy = this->listaBonus;
+	int tp = -1;
+	while (copy != NULL) //scorre una copia della lista attuale
+	{
+		if (copy->x == x && copy->y == y) //se il player si trova nella stessa casella ottiene il valore e non salva le coordinate nella nuova lista
+		{
+			tp = copy->type;
+		}
+		copy = copy->next;
+	}
+	return tp;
+}
+
 void Bonus::print()
 {
 	BonusList temp = this->listaBonus;
 	
 	while (temp != NULL)
 	{
+		if (temp->type == 0) symbol = '$';
+		if (temp->type == 1) symbol = char(3);
+		if (temp->type == 2) symbol = '+';
 		PrintAt(temp->x + 1, temp->y + 1, symbol);
 		temp = temp->next;
 	}

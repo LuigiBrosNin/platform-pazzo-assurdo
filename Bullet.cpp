@@ -12,10 +12,12 @@ bool Bullet::isVisible()
 
 void Bullet::fireb(Player p) 
 {
-	visible = true;
-	this->x = p.getX() + 1;
-	this->y = p.getY();
-	this->symbol = 'O';
+	if (!visible) {
+		visible = true;
+		this->x = p.getX();
+		this->y = p.getY();
+		this->symbol = 'O';
+	}
 }
 
 void Bullet::enemyFire(int x, int y)
