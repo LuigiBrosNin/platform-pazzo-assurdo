@@ -5,12 +5,11 @@
 #include "Funzioni.h"
 #include "Bullet.h"
 
-Enemy::Enemy(int x, int y, int type, char symbol) : Entity (x, y, symbol)
+Enemy::Enemy(int x, int y, int type, char symbol) : Entity(x, y, symbol)
 {
 	this->enemies = NULL;
-	this->movementSleepCount = -1;
-	this->fireSleepCount = -1;
 	this->directionUp = true;
+	this->touched = false;
 }
 
 void Enemy::generateEnemies(int enemyNumber, Platform generablePositions)
@@ -23,7 +22,7 @@ void Enemy::generateEnemies(int enemyNumber, Platform generablePositions)
 	while (enemyNumber > 0)
 	{
 		// Generazione di coordinate casuali in cui generare i nemici
-		x = rand() % generablePositions.getWidth();
+		x = rand() % generablePositions.getWidth() + 1;
 		y = 2 * rand() % generablePositions.getHeight();
 
 		// Creazione (o meno) effettiva del nemico
@@ -32,11 +31,22 @@ void Enemy::generateEnemies(int enemyNumber, Platform generablePositions)
 			enemyPosition list = new enemy;
 			list->x = x;
 			list->y = y;
-			list->type = rand() % 3;
-			if (list->type == 1)
-				list->direction = rand() % 4;
-			else
+			//list->type = rand() % 3;
+			list->type = 2;
+
+			if (list->type == 0)
 				list->direction = -1;
+			else
+			{
+				if (list->type == 2)
+				{
+					list->fireBallX = x;
+					list->fireBallY = y;
+				}
+
+				list->direction = rand() % 4;
+			}
+
 			list->nextEnemy = this->enemies;
 
 			this->enemies = list;
@@ -48,7 +58,7 @@ void Enemy::generateEnemies(int enemyNumber, Platform generablePositions)
 
 void Enemy::print (Platform generablePositions)
 {
-	char s = '0';
+	char s = '0', fireBallChar = '*';
 	enemyPosition list = this->enemies;
 	
 	while (list != NULL)
@@ -67,27 +77,33 @@ void Enemy::print (Platform generablePositions)
 			{
 				s = 'B';
 
-				movementSleepCount++;
+				list->movementSleepCount_UpDown++;
+				list->movementSleepCount_RightLeft++;
 
-				if (movementSleepCount == 5)
+				if (list->movementSleepCount_UpDown == 5 && (list->direction == 0 || list->direction == 1))
 				{
-					movementSleepCount = -1;
+					list->movementSleepCount_UpDown = -1;
 
 					if (list->direction == 0)	// Movimento verso il basso
 					{
-						if ((list->y + 2) < generablePositions.getHeight() && generablePositions.isThere(list->x, list->y + 2))
+						if ((list->y + 2) < generablePositions.getHeight())// && generablePositions.isThere(list->x, list->y + 2))
 							list->y += 2;
 						else
 							list->direction = 1;
 					}
 					else if (list->direction == 1)	// Movimento verso l'alto
 					{
-						if ((list->y - 2) >= 0 && generablePositions.isThere(list->x, list->y - 2))
+						if ((list->y - 2) >= 0)// && generablePositions.isThere(list->x, list->y - 2))
 							list->y -= 2;
 						else
 							list->direction = 0;
 					}
-					else if (list->direction == 2)	// Movimento verso destra
+				}
+				else if (list->movementSleepCount_RightLeft == 4 && (list->direction == 2 || list->direction == 3))
+				{
+					list->movementSleepCount_RightLeft = -1;
+
+					if (list->direction == 2)	// Movimento verso destra
 					{
 						if ((list->x + 1) < generablePositions.getWidth() && generablePositions.isThere(list->x + 1, list->y))
 							list->x += 1;
@@ -110,39 +126,95 @@ void Enemy::print (Platform generablePositions)
 			{
 				s = 'C';
 
-				fireSleepCount++;
+				list->movementSleepCount_UpDown++;
+				list->movementSleepCount_RightLeft++;
 
-				if (fireSleepCount == 10)
+				if (list->movementSleepCount_UpDown == 3 && (list->direction == 0 || list->direction == 1))
 				{
-					fireSleepCount = -1;
+					list->movementSleepCount_UpDown = -1;
 
 					if (list->direction == 0)	// Spara verso il basso
 					{
-						//list->b.enemyFire(list->x, list->y);
-						//schermo.setBullet(list->b);
+						if (list->fireBallY < generablePositions.getHeight() - 1)
+						{
+							PrintAt(list->fireBallX + 1, list->fireBallY + 1, fireBallChar, prevx + 1, prevy + 1);
+							PrintAt(list->fireBallX + 1, list->fireBallY, ' ', prevx + 1, prevy + 1);
+							list->fireBallY += 1;
+						}
+						else if (list->fireBallY >= generablePositions.getHeight() - 1)
+						{
+							if (!(generablePositions.isThere(list->x, list->y + 2)))
+								list->direction = 1;
+							else
+							{
+								PrintAt(list->fireBallX + 1, list->fireBallY, ' ', prevx + 1, prevy + 1);
+								list->fireBallX = list->x;
+								list->fireBallY = list->y;
+							}
+						}
 					}
 					else if (list->direction == 1)	// Spara verso l'alto
 					{
-						//list->b.enemyFire(list->x, list->y);
-						//schermo.setBullet(list->b);
+						if (list->fireBallY > 0)
+						{
+							PrintAt(list->fireBallX + 1, list->fireBallY, fireBallChar, prevx + 1, prevy + 1);
+							PrintAt(list->fireBallX + 1, list->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+							list->fireBallY -= 1;
+						}
+						else if (list->fireBallY <= 0)
+						{
+							if (!(generablePositions.isThere(list->x, list->y - 2)))
+								list->direction = 0;
+							else
+							{
+								PrintAt(list->fireBallX + 1, list->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+								list->fireBallX = list->x;
+								list->fireBallY = list->y;
+							}
+						}
 					}
-					else if (list->direction == 2)	// Spara verso destra
+				}
+				else if (list->movementSleepCount_RightLeft == 1 && (list->direction == 2 || list->direction == 3))
+				{
+					list->movementSleepCount_RightLeft = -1;
+
+					if (list->direction == 2)	// Spara verso destra
 					{
-						//list->b.enemyFire(list->x, list->y);
-						//schermo.setBullet(list->b);
+						if (list->fireBallX < generablePositions.getWidth())
+						{
+							PrintAt(list->fireBallX + 1, list->fireBallY + 1, fireBallChar, prevx + 1, prevy + 1);
+							PrintAt(list->fireBallX, list->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+							list->fireBallX += 1;
+						}
+						else if (list->fireBallX >= generablePositions.getWidth())
+						{
+							PrintAt(list->fireBallX, list->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+							list->fireBallX = list->x;
+							list->fireBallY = list->y;
+						}
 					}
 					else if (list->direction == 3)	// Spara verso sinistra
 					{
-						//list->b.enemyFire(list->x, list->y);
-						//schermo.setBullet(list->b);
+						if (list->fireBallX > 0)
+						{
+							PrintAt(list->fireBallX, list->fireBallY + 1, fireBallChar, prevx + 1, prevy + 1);
+							PrintAt(list->fireBallX + 1, list->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+							list->fireBallX -= 1;
+						}
+						else if (list->fireBallX <= 0)
+						{
+							PrintAt(list->fireBallX + 1, list->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+							list->fireBallX = list->x;
+							list->fireBallY = list->y;
+						}
 					}
 				}
 
 				break;
+			}
 
 			default:
 				break;
-			}
 		}
 
 		PrintAt(list->x + 1, list->y + 1, s, prevx+1, prevy+1);
@@ -152,7 +224,7 @@ void Enemy::print (Platform generablePositions)
 
 bool Enemy::enemyHandler(Player player, Bullet bullet)
 {
-	enemyPosition updated = NULL, copy = this->enemies, tmp = NULL;
+	enemyPosition copy = this->enemies, newEnemiesList, previousNode;
 	bool update = false, touched = false;
 
 	/*
@@ -161,45 +233,78 @@ bool Enemy::enemyHandler(Player player, Bullet bullet)
 	 *	- se un proiettile sparato tocca un nemico questi viene eliminato;
 	 *	- se tocca un nemico da altre direzioni senza sparargli, rimuove una vita.
 	 */
+
 	while (copy != NULL)
 	{
-		if (copy->x == player.getX() && copy->y == player.getY())
+		if ((copy->x == player.getX() && copy->y == player.getY()) || (bullet.getX() == copy->x && bullet.getY() == copy->y))
 		{
 			if (player.getPrevy() >= copy->y)	// Controllo se il giocatore tocca il nemico senza caderci da sopra
 				touched = true;
-			
+
 			update = true;
-			copy->type = -1;
+			copy->type = -1;	// Nemico da eliminare o a causa di un proiettile o perché il giocatore ci è passato sopra
 		}
-		else if (bullet.getX() == copy->x && bullet.getY() == copy->y)	// Controllo del proiettile
+		else if (copy->fireBallX == player.getX() && copy->fireBallY == player.getY())
+			touched = true;
+
+		if (update || touched)
 		{
-			update = true;
-			copy->type = -1;
+			if (copy->direction == 0)
+			{
+				PrintAt(copy->fireBallX + 1, copy->fireBallY, ' ', prevx + 1, prevy + 1);
+				copy->fireBallX = -2;
+			}
+			else if (copy->direction == 1)
+			{
+				PrintAt(copy->fireBallX + 1, copy->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+				copy->fireBallX = -2;				
+			}
+			else if (copy->direction == 2)
+			{
+				PrintAt(copy->fireBallX, copy->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+				copy->fireBallY = -2;
+			}
+			else if (copy->direction == 3)
+			{
+				PrintAt(copy->fireBallX + 1, copy->fireBallY + 1, ' ', prevx + 1, prevy + 1);
+				copy->fireBallY = -2;
+			}
 		}
 
 		copy = copy->nextEnemy;
 	}
 
-	if (update)		// Aggiornamento della lista dei nemici
+	if (update)
 	{
 		copy = this->enemies;
+		newEnemiesList = copy;
+		previousNode = newEnemiesList;
 
 		while (copy != NULL)
 		{
 			if (copy->type != -1)
 			{
-				tmp = new enemy;
-				tmp->type = copy->type;
-				tmp->x = copy->x;
-				tmp->y = copy->y;
-				tmp->nextEnemy = updated;
-				updated = tmp;
-			}
+				if (copy != previousNode)
+					previousNode = previousNode->nextEnemy;
 
-			copy = copy->nextEnemy;
+				copy = copy->nextEnemy;
+			}
+			else
+			{
+				if (newEnemiesList == copy)
+				{
+					newEnemiesList = newEnemiesList->nextEnemy;
+					copy = copy->nextEnemy;
+				}
+				else
+				{
+					copy = copy->nextEnemy;
+					previousNode->nextEnemy = copy;
+				}
+			}
 		}
 
-		this->enemies = updated;
+		this->enemies = newEnemiesList;
 	}
 
 	return touched;

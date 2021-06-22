@@ -31,19 +31,16 @@ p_livello Screen::generateLevel(int difficolta)
 	ret->next = NULL;
 	ret->prev = NULL;
 
-	/*
-		qua in mezzo ci va tutta la generazione dell'array di nemici, bonus e piattaforme
-		va implementata anche la generazione basata sulla difficoltà
-	*/
-	//ret->e = Entity(rand() % width, rand() % height, 'U');
 	ret->p = Platform();
 	ret->p.generate(difficolta);
+
 	ret->b = Bullet();
-	ret->enemiesList = Enemy();
-	ret->enemiesList.generateEnemies((difficolta / 2) + 1, ret->p);
+	
 	ret->money = Bonus();
 	ret->money.generateBonus(ret->p, difficolta);
-	//ret->e = Entity();
+
+	ret->enemiesList = Enemy();
+	ret->enemiesList.generateEnemies((difficolta / 2) + 1, ret->p);
 
 	this->difficolta++;
 	return ret;
@@ -67,7 +64,9 @@ void Screen::nextLevel()
 bool Screen::prevLevel()
 {
 	// - Funzione che permette la visualizzazione "all'indietro" di un livello precedentemente generato -
+	
 	Clear();
+	
 	if (level->prev != NULL)
 	{
 		level = level->prev;
